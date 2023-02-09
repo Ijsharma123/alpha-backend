@@ -13,7 +13,6 @@ const app = express()
 app.use(express.json());
 app.use(cors())
 
-// app.get('/', (req, res) => res.send('Home Page Route'));
 
 /** Images path for CoverPage Api  */
 app.use("/src/Images/uploadCoverPhoto",express.static('src/Images/uploadCoverPhoto'))  
@@ -24,9 +23,9 @@ app.use("/src/Images/uploadAttachmentPhoto",express.static('src/Images/uploadAtt
 
 
 //Admin Path
-// const AdminRouter = require("../routes/admin")
+const AdminRouter = require("../routes/admin")
 //User Path
-// const UserRouter = require("../routes/user")
+const UserRouter = require("../routes/user")
 
 app.listen(process.env.PORT,()=>{
     console.log(`Server Started Successfully ${process.env.PORT}`)
@@ -48,6 +47,6 @@ app.use("/", responseHandler);
 
 
 //Admin
-// app.use("/admin",AdminRouter)
+app.use("/admin",AdminRouter)
 //User
-// app.use("/user",UserRouter)
+app.use("/user",UserRouter)
