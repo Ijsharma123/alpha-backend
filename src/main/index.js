@@ -13,6 +13,8 @@ const app = express()
 app.use(express.json());
 app.use(cors())
 
+app.get('/', (req, res) => res.send('Home Page Route'));
+
 /** Images path for CoverPage Api  */
 app.use("/src/Images/uploadCoverPhoto",express.static('src/Images/uploadCoverPhoto'))  
 
