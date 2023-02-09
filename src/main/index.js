@@ -4,6 +4,9 @@ const express = require("express")
 const cors = require("cors")
 const DBconnect = require("../config/database")
 
+const User = require("./../models/admin/userSchema")
+
+
 DBconnect()
 
 const app = express()
@@ -26,6 +29,17 @@ const UserRouter = require("../routes/user")
 app.listen(process.env.PORT,()=>{
     console.log(`Server Started Successfully ${process.env.PORT}`)
 })
+
+app.get("/user/list",(req,res)=>{
+    try{
+        const user12 = User.find()
+        return res.status(200).json({success:true, msg:user12})
+    }catch(err){
+        return res.status(400).json({success:false, msg:err.message})
+    }
+})
+
+
 
 const responseHandler = require("../Middlewares/responseHandler");
 app.use("/", responseHandler);
