@@ -50,3 +50,5 @@ app.use("/", responseHandler);
 app.use("/admin",AdminRouter)
 //User
 app.use("/user",UserRouter)
+
+module.exports = app
