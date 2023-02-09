@@ -8,3 +8,21 @@ const app = express()
 const PORT = process.env.PORT || 3000
 app.use("/api", router)
 app.listen(PORT, ()=> console.log(`server is running in port ${PORT}`))
+
+
+
+//{
+//     "version": 2,
+//     "builds": [
+//         { 
+//             "src": ".index.js",
+//             "use": "@vercel/node"
+//         }
+//     ],
+//     "routes":[
+//         {
+//             "src": "/(.*)",
+//             "dest": "/"
+//         }
+//     ]
+// }
