@@ -2,10 +2,7 @@ require('dotenv').config();
 
 const express = require("express")
 const cors = require("cors")
-const DBconnect = require("../config/database")
-
-const User = require("../models/admin/userSchema")
-
+const DBconnect = require("./src/config/database")
 
 DBconnect()
 
@@ -23,26 +20,15 @@ app.use("/src/Images/uploadAttachmentPhoto",express.static('src/Images/uploadAtt
 
 
 //Admin Path
-const AdminRouter = require("../routes/admin")
+const AdminRouter = require("./src/routes/admin")
 //User Path
-const UserRouter = require("../routes/user")
+const UserRouter = require("./src/routes/user")
 
 app.listen(process.env.PORT,()=>{
     console.log(`Server Started Successfully ${process.env.PORT}`)
 })
 
-app.get("/user/list", async (req,res)=>{
-    try{
-        const user12 =await User.find()
-        return res.status(200).json({success:true, msg:user12})
-    }catch(err){
-        return res.status(400).json({success:false, msg:err.message})
-    }
-})
-
-
-
-const responseHandler = require("../Middlewares/responseHandler");
+const responseHandler = require("./src/Middlewares/responseHandler");
 app.use("/", responseHandler);
 
 
@@ -50,5 +36,3 @@ app.use("/", responseHandler);
 app.use("/admin",AdminRouter)
 //User
 app.use("/user",UserRouter)
-
-module.exports = app
