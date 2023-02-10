@@ -1,9 +1,9 @@
 require('dotenv').config();
-const DBconnect = require("./src/config/database")
+const DBconnect = require("../src/config/database")
 DBconnect()
 
 const express = require("express")
-const router = require('./api/product')
+const router = require('./product')
 const app = express()
 const PORT = process.env.PORT || 3000
 app.use("/api", router)
