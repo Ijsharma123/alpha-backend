@@ -1,6 +1,7 @@
 require('dotenv').config()
 const jwt = require("jsonwebtoken")
 // const bcrypt = require("bcrypt")
+const argon2 = require('argon2');
 const { Validator } = require('node-input-validator')
 const { nodemailer } = require("nodemailer")
 const Admin = require("../../models/admin/adminSchema");
@@ -47,26 +48,40 @@ exports.addAdmin = async function addAdmin(req, res) {
     const password = req.body.password
     try {
         const add = await Admin.find({ email })
-
+        
         if (add.length >= 1) {
             return res.status(401).json({ success: false, message: "Admin already exists" })
         } else {
-            bcrypt.hash(password, 10, (err, hash) => {
-                if (err) {
-                    return res.status(401).json({ success: false, message: err.message })
-                } else {
-                    const Add = new Admin({
-                        email: req.body.email,
-                        name: req.body.name,
-                        password: hash,
-                        address: req.body.address,
-                        add_logo: req.body.add_logo,
-                        contact_number: req.body.contact_number
-                    })
+            //bcrypt.hash(password, 10, (err, hash) => {
+                //     if (err) {
+                //         return res.status(401).json({ success: false, message: err.message })
+                //     } else {
+                //         const Add = new Admin({
+                //             email: req.body.email,
+                //             name: req.body.name,
+                //             password: hash,
+                //             address: req.body.address,
+                //             add_logo: req.body.add_logo,
+                //             contact_number: req.body.contact_number
+                //         })
+                //         console.log(Add)
+                //     Add.save()
+               const hash = await argon2.hash("password");
+                if (!hash) {
+                        return res.status(401).json({ success: false, message: err.message })
+                    } else {
+                        const Add = new Admin({
+                            email: req.body.email,
+                            name: req.body.name,
+                            password: hash,
+                            address: req.body.address,
+                            add_logo: req.body.add_logo,
+                            contact_number: req.body.contact_number
+                        })
+                        // console.log(Add)
                     Add.save()
                     return res.status(200).json({ success: true, message:"Admin added Successfully" })
                 }
-            })
         }
     } catch (err) {
         return res.status(401).json({ success: false, err: err.message })
@@ -83,7 +98,8 @@ exports.login = async function adminlogin(req, res) {
         if (!admin) {
             return res.status(501).json({ success: false, msg: "Invalid Email" })
         }
-        const passwordMatch = await bcrypt.compare(password, admin.password)
+        // const passwordMatch = await bcrypt.compare(password, admin.password)
+        const passwordMatch = await argon2.verify("$argon2id$v=19$m=65536,t=3,p=4$ixax/rybLrm2T5Xtq8HKzw$c7jgI0SD52EWC0Gz6Dh713DuHFxoM4869hug4RpGIOw", "admin.password")
         if (!passwordMatch) {
             return res.status(501).json({ success: false, msg: "Invalid Password" })
         }
@@ -123,9 +139,9 @@ exports.changePassword = async function changePassword(req, res) {
 
         //const user =await Admin.findOne({email:req.body.email})    when you want to change password with email
         const admin = await Admin.findById(req.admin.id)
-        if (bcrypt.compareSync(req.body.old_password, admin.password)) {
+        if (argon2.verify(req.body.old_password, admin.password)) {
 
-            const hashPassword = bcrypt.hashSync(req.body.new_password, 10)
+            const hashPassword = argon2.verify(req.body.new_password, 10)
             await Admin.updateOne({ _id: admin._id }, { password: hashPassword })
 
             return res.status(200).json({ success: true, mess: "Password successfully Updated" })

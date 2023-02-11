@@ -11,6 +11,7 @@
     "append-field": "^1.0.0",
     "aproba": "^2.0.0",
     "are-we-there-yet": "^2.0.0",
+    "argon2": "^0.30.3",
     "array-flatten": "^1.1.1",
     "balanced-match": "^1.0.2",
     "bl": "^2.2.1",
