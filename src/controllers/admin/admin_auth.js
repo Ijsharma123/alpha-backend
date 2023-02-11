@@ -1,6 +1,6 @@
 require('dotenv').config()
 const jwt = require("jsonwebtoken")
-const bcrypt = require("bcrypt")
+// const bcrypt = require("bcrypt")
 const { Validator } = require('node-input-validator')
 const { nodemailer } = require("nodemailer")
 const Admin = require("../../models/admin/adminSchema");
