@@ -50,7 +50,7 @@ const router = express.Router()
 
 /** Sample Result File Path */
      router.route("/sampleresult/add").post(Token, SampleResult.addSampleResult)
-     router.route("/sampleresult/view/:_id").get(Token, SampleResult.sampleResultView)
+     router.route("/sampleresult/view/:job_id").get(Token, SampleResult.sampleResultView)
      router.route("/sampleresult/edit/:_id").post(Token, SampleResult.sampleResultEdit)
      router.route("/sampleresult/delete/:_id").get(Token, SampleResult.sampleResultDelete)
 
