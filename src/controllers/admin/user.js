@@ -1,4 +1,4 @@
-// const bcrypt = require("bcrypt")
+const bcrypt = require("bcryptjs")
 const User = require("../../models/admin/userSchema")
 const UserGroup = require("../../models/admin/userGroup")
 

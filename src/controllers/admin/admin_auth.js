@@ -64,7 +64,7 @@ exports.addAdmin = async function addAdmin(req, res) {
                             add_logo: req.body.add_logo,
                             contact_number: req.body.contact_number
                         })
-                        console.log(Add)
+                        // console.log(Add)
                     Add.save()
             //    const hash = await argon2.hash("password");
             //     if (!hash) {
