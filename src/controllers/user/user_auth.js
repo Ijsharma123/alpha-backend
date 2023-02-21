@@ -1,7 +1,7 @@
 const User = require('../../models/admin/userSchema');
 const jwt = require("jsonwebtoken");
 const otpGenerator = require("otp-generator");
-// const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const { Validator } = require('node-input-validator');
 const Job = require('../../models/admin/jobSchema');

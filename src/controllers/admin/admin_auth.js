@@ -100,7 +100,6 @@ exports.login = async function adminlogin(req, res) {
             return res.status(501).json({ success: false, msg: "Invalid Email" })
         }
         const passwordMatch = await bcrypt.compare(password, admin.password)
-        // const passwordMatch = await argon2.verify("$argon2id$v=19$m=65536,t=3,p=4$ixax/rybLrm2T5Xtq8HKzw$c7jgI0SD52EWC0Gz6Dh713DuHFxoM4869hug4RpGIOw", "admin.password")
         if (!passwordMatch) {
             return res.status(501).json({ success: false, msg: "Invalid Password" })
         }
