@@ -8,26 +8,18 @@ exports.addSampleResult = async function addSampleResult(req, res){
     const job_id = req.body.job_id
     try{
         const match = await SampleResult.findOne({job_id})
-        var msg = ''
-        if(!match){
+        let msg = ''
         const add = new SampleResult({
             sample_id:req.body.sample_id,
             fibre_type:req.body.fibre_type,
             job_id:req.body.job_id,
             added_by:req.body.added_by
         })
-        await add.save()
+        add.save()
         msg = "Added Successfully"
-        }else{
-            const user = await SampleResult.findOneAndUpdate({job_id},{
-                sample_id:req.body.sample_id,
-                fibre_type:req.body.fibre_type,
-                job_id:req.body.job_id,
-                edit_by:req.body.edit_by,
-                updateAt:Date.now()
-            })
-            msg = "Update Successfully"
+        // }
             const jobdata = await JobTabTask.findOne({ job_id: mongoose.Types.ObjectId(job_id) });
+            if(jobdata){
             const tabArr = jobdata.tabs;
              tabArr.filter(function (value, key) {
                 if (value._id == 6) {
@@ -48,14 +40,26 @@ exports.addSampleResult = async function addSampleResult(req, res){
             ).exec();
             msg = 'Tab Update Successfull'
             }
+            }
             return res.status(200).json({success:true, message:msg})
+        
     
-        }
     }catch(err){
         return res.status(401).json({success:false, message:err.message})
     }
 }
 
+
+/** Sample Result List */
+exports.sampleResultList = async function sampleResultList(req, res){
+    const job_id = req.params.job_id
+    try{
+        const view = await SampleResult.find({job_id})
+        return res.status(200).json({success:true, data:view})
+    }catch(err){
+        return res.status(401).json({success:false, message:err.message})
+    }
+}
 
 
 /** Sample Result View */
@@ -73,9 +77,15 @@ exports.sampleResultView = async function sampleResultView(req, res){
 
 /** Sample Result Edit */
 exports.sampleResultEdit = async function sampleResultEdit(req, res){
-    const _id = req.params
+    const _id = req.params._id
     try{
-        const user = await SampleResult.findByIdAndUpdate(_id, req.body)
+        const user = await SampleResult.findOneAndUpdate({_id},{
+            sample_id:req.body.sample_id,
+            fibre_type:req.body.fibre_type,
+            job_id:req.body.job_id,
+            edit_by:req.body.edit_by,
+            updateAt:Date.now()
+        })
         return res.status(200).json({success:true, message:"Update Successfully"})
     }catch(err){
         return res.status(401).json({success:false, err:err.message})
@@ -88,7 +98,7 @@ exports.sampleResultEdit = async function sampleResultEdit(req, res){
 exports.sampleResultDelete = async function sampleResultDelete(req, res){
     const _id = req.params
     try{
-        const user = await SampleResult.findByIdAndDelete(_id)
+        const user = await SampleResult.findOneAndDelete({_id})
         return res.status(200).json({success:true, message:"Delete Successfully"})
     }catch(err){
         return res.status(401).json({success:false, err:err.message})

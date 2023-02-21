@@ -68,9 +68,9 @@ exports.addsign = async function addsign(req, res) {
 
 /** SignOff View */
 exports.signView = async function signView(req, res) {
-    const _id = req.params
+    const job_id = req.params.job_id
     try {
-        const view = await Sign.findById(_id)
+        const view = await Sign.find({job_id})
         return res.status(200).json({ success: true, data: view })
     } catch (err) {
         return res.status({ success: false, message: err.message })
@@ -81,9 +81,24 @@ exports.signView = async function signView(req, res) {
 
 /** SignOff Edit */
 exports.editSign = async function editSign(req, res) {
-    const _id = req.params
+    const job_id = req.params.job_id
+    if (req.file == '' || req.file == undefined) {
+        signature = req.body.signature
+    } else {
+        signature = "http://localhost:3000/" + req.file.path.replace(/\\/g, '/')
+    }
     try {
-        const edit = await Sign.findByIdAndUpdate(_id, req.body)
+        const edit = await Sign.findOneAndUpdate({job_id},{
+            sign_off:req.body.sign_off,
+            name:req.body.name,
+            signature:signature,
+            job_id:req.body.job_id,
+            edit_by:req.body.edit_by,
+            Date: req.body.Date,
+            updateAt:Date.now()
+
+
+        })
         return res.status(200).json({ success: true, message: "Update Successfully" })
     } catch (err) {
         return res.status(401).json({ success: false, message: err.message })
@@ -94,9 +109,9 @@ exports.editSign = async function editSign(req, res) {
 
 /** SignOff Delete */
 exports.deleteSign = async function deleteSign(req, res) {
-    const _id = req.params
+    const job_id = req.params.job_id
     try {
-        const sign = await Sign.findByIdAndDelete(_id)
+        const sign = await Sign.findAndDelete({job_id})
         return res.status(200).json({ success: true, message: "Delete Successfully" })
     } catch (err) {
         return res.status(401).json({ success: false, message: err.message })
