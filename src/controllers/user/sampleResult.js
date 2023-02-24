@@ -9,6 +9,7 @@ exports.addSampleResult = async function addSampleResult(req, res){
     try{
         const match = await SampleResult.findOne({job_id})
         let msg = ''
+        // if(!match){
         const add = new SampleResult({
             sample_id:req.body.sample_id,
             fibre_type:req.body.fibre_type,

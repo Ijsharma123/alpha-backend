@@ -74,9 +74,9 @@ exports.addAttachment = async function addAttachment(req, res) {
 
 /** Attachment View */
 exports.attachmentView = async function attachmentView(req, res) {
-    const _id = req.params
+    const job_id = req.params.job_id
     try {
-        const view = await Attachment.findById(_id)
+        const view = await Attachment.find({job_id})
         return res.status(200).json({ success: true, data: view })
     } catch (err) {
         return res.status(401).json({ success: false, message: err.message })
@@ -87,16 +87,18 @@ exports.attachmentView = async function attachmentView(req, res) {
 
 /** Attachment Edit */
 exports.attachmentEdit = async function attachmentEdit(req, res) {
-    const _id = req.params
-    if (req.file) {
-        image = req.file.path
+    const job_id = req.params.job_id
+    if (req.file == '' || req.file == undefined) {
+        image = req.body.image
+    } else {
+        image = "http://localhost:3000/" + req.file.path.replace(/\\/g, '/')
     }
     try {
-        const edit = await Attachment.findByIdAndUpdate(_id, {
+        const edit = await Attachment.findOneAndUpdate(job_id, {
             attachment: req.body.attachment,
             page_number: req.body.page_number,
             title: req.body.title,
-            image: "http://localhost:3000/" + req.file.path.replace(/\\/g, '/'),
+            image: image,
             page_size: req.body.page_size,
             paper_orientation: req.body.paper_orientation,
             job_id: req.body.job_id,

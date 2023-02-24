@@ -44,8 +44,8 @@ const router = express.Router()
 
 /** Attachment File Path */
      router.route("/attachment/add").post(Token, attachUpload, Attachment.addAttachment)
-     router.route("/attachment/view/:_id").get(Token, Attachment.attachmentView)
-     router.route("/attachment/edit/:_id").post(Token, attachUpload, Attachment.attachmentEdit)
+     router.route("/attachment/view/:job_id").get(Token, Attachment.attachmentView)
+     router.route("/attachment/edit/:job_id").post(Token, attachUpload, Attachment.attachmentEdit)
      router.route("/attachment/delete/:_id").get(Token, Attachment.deleteAttachment)
 
 /** Sample Result File Path */

@@ -36,7 +36,6 @@ exports.addCoverPhoto = async function addCoverPhoto(req, res) {
         if (jobdata) {
             const tabArr = jobdata.tabs;
             tabArr.filter(function (value, key) {
-                // console.log(value._id == 2)
                 if (value._id == 2) {
                     value.status = true;
                 }
@@ -66,17 +65,17 @@ exports.addCoverPhoto = async function addCoverPhoto(req, res) {
                 })
                 const jobdata = await JobTabTask.findOne({ job_id: mongoose.Types.ObjectId(job_id) });
                 if (jobdata) {
-                    // let jobcount = 0
+                    let jobcount = 0
                     const tabArr = jobdata.tabs;
                     tabArr.filter(async function (value, key) {
-                        if (value._id == 1 && value._id == 2 && value.status == true) {
-                        // if (value._id == 1 && value.status == true) {
-                        //    jobcount += 1;
-                        // }
-                        // if (value._id == 2 && value.status == true) {
-                        //     jobcount += 1;
-                        //  }
-                        //  if(jobcount == 2){
+                        // if (value._id == 1 && value._id == 2 && value.status == true) {
+                        if (value._id == 1 && value.status == true) {
+                           jobcount += 1;
+                        }
+                        if (value._id == 2 && value.status == true) {
+                            jobcount += 1;
+                         }
+                         if(jobcount == 2){
                             const job3 = await jobtabupdate.findByIdAndUpdate({ _id: job_id },
                                 { $set: { tabs: tabArr1 } },
                                 function (er, re) {
@@ -90,7 +89,6 @@ exports.addCoverPhoto = async function addCoverPhoto(req, res) {
                     })
                     // if( tabArr._id == 2 &&  tabArr._id == 1 && tabArr.status == true){
                     //    const filterdata = tabArr.filter(value => value._id == 1 || value._id == 2 && value.status == true)
-                    //    console.log(filterdata)
                 }
             }
             return res.status(200).json({ success: true, message: msg })

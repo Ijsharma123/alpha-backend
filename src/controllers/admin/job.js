@@ -23,13 +23,13 @@ exports.jobAdd = async function jobAdd(req, res) {
             const addjob = new JobTabTask({
                 job_id: add._id,
                 tabs: [
-                    { "_id": 1, "tab_name": "site work", "name": "Scope of Work & Genral Info", "status": false },
-                    { "_id": 2, "tab_name": "site work", "name": "Cover Page Photo", "status": false },
-                    { "_id": 3, "tab_name": "lab result", "name": "Inspections", "status": false },
-                    { "_id": 4, "tab_name": "floor plan", "name": "Attachments", "status": false },
-                    { "_id": 5, "tab_name": "Quality Control", "name": "Quality Control", "status": false },
-                    { "_id": 6, "tab_name": "issued", "name": "Sample Result", "status": false },
-                    { "_id": 7, "tab_name": "issued", "name": "Sign Off", "status": false }
+                    { "_id": 1, "tab_id":1, "tab_name": "SiteWork", "name": "Scope of Work & Genral Info", "status": false },
+                    { "_id": 2, "tab_id":1, "tab_name": "SiteWork", "name": "Cover Page Photo", "status": false },
+                    { "_id": 3, "tab_id":2, "tab_name": "LabResult", "name": "Inspections", "status": false },
+                    { "_id": 4, "tab_id":3, "tab_name": "FloorPlan", "name": "Attachments", "status": false },
+                    { "_id": 5, "tab_id":4, "tab_name": "QualityControl", "name": "Quality Control", "status": false },
+                    { "_id": 6, "tab_id":5, "tab_name": "Issued", "name": "Sample Result", "status": false },
+                    { "_id": 7, "tab_id":5, "tab_name": "Issued", "name": "Sign Off", "status": false }
                 ],
                 added_by: req.admin.id
             })

@@ -68,7 +68,6 @@ exports.addinspection = async function addinspection(req, res) {
             additional_comments: inspectData.additional_comments,
             status: true
         }
-        // const job_id = req.body.job_id
         const add = new Inspection(saveinspectData)
         var msg = ''
         add.save()
