@@ -16,7 +16,7 @@ exports.addsign = async function addsign(req, res) {
             const add = new Sign({
                 sign_off: req.body.sign_off,
                 name: req.body.name,
-                signature: "http://localhost:3000/" + req.file.path.replace(/\\/g, '/'),
+                signature: "http://alpha-backend-six.vercel.app/" + req.file.path.replace(/\\/g, '/'),
                 Date: req.body.Date,
                 job_id: req.body.job_id,
                 added_by: req.body.added_by
@@ -27,7 +27,7 @@ exports.addsign = async function addsign(req, res) {
             const edit = await Sign.findOneAndUpdate({ job_id }, {
                 sign_off: req.body.sign_off,
                 name: req.body.name,
-                signature: "http://localhost:3000/" + req.file.path.replace(/\\/g, '/'),
+                signature: "http://alpha-backend-six.vercel.app/" + req.file.path.replace(/\\/g, '/'),
                 Date: req.body.Date,
                 job_id: req.body.job_id,
                 edit_by: req.body.edit_by,
@@ -85,7 +85,7 @@ exports.editSign = async function editSign(req, res) {
     if (req.file == '' || req.file == undefined) {
         signature = req.body.signature
     } else {
-        signature = "http://localhost:3000/" + req.file.path.replace(/\\/g, '/')
+        signature = "http://alpha-backend-six.vercel.app/" + req.file.path.replace(/\\/g, '/')
     }
     try {
         const edit = await Sign.findOneAndUpdate({job_id},{
