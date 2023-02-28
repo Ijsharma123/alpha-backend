@@ -14,7 +14,7 @@ const attachSchema = mongoose.Schema({
     },
     image:{
         type:String,
-        required:false
+        required:true
     },
     page_size:{
         type:String,
