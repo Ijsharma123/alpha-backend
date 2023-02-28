@@ -9,8 +9,8 @@ exports.addAttachment = async function addAttachment(req, res) {
         image = req.file.path
     }
     try {
-        const image = await loadImage(fs.readFileSync(__dirname 
-            + "http://alpha-backend-six.vercel.app/" + req.file.path.replace(/\\/g, '/')))
+        // const image = await loadImage(fs.readFileSync(__dirname   
+        //     + "http://alpha-backend-six.vercel.app/" + req.file.path.replace(/\\/g, '/')))
         const match = await Attachment.findOne({ job_id })
         var msg = ''
         if (!match) {
@@ -18,8 +18,8 @@ exports.addAttachment = async function addAttachment(req, res) {
                 attachment: req.body.attachment,
                 page_number: req.body.page_number,
                 title: req.body.title,
-                image:image,
-                // image: "http://alpha-backend-six.vercel.app/" + req.file.path.replace(/\\/g, '/'),
+                // image:image,
+                image: "http://alpha-backend-six.vercel.app/" + req.file.path.replace(/\\/g, '/'),
                 page_size: req.body.page_size,
                 paper_orientation: req.body.paper_orientation,
                 job_id: req.body.job_id,
