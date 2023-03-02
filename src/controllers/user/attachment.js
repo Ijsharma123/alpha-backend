@@ -125,3 +125,11 @@ exports.deleteAttachment = async function deleteAttachment(req, res) {
         return res.status(401).json({ success: false, message: err.message })
     }
 }
+
+
+exports.test = async function test(req, res) {
+   console.log("it is working")
+   
+   console.log(__dirname)
+   res.sendFile(__dirname + '/index.html');
+}

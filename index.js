@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require("express")
 const cors = require("cors")
+const app2 = express.Router()
 const DBconnect = require("./src/config/database")
 
 DBconnect()
@@ -9,6 +10,7 @@ DBconnect()
 const app = express()
 app.use(express.json());
 app.use(cors())
+
 
 
 /** Images path for CoverPage Api  */
