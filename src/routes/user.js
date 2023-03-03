@@ -16,6 +16,7 @@ const router = express.Router()
      const Inspection = require("../controllers/user/inspection")
      const upload = require("../controllers/user/uploadInspectionPhoto")
      const Preview = require("../controllers/user/preview")
+     const Inspect = require("../controllers/user/inspectEdit")
 
 /** User_auth File Route */
      router.route("/login").post(User.userLogin)
@@ -47,31 +48,33 @@ const router = express.Router()
      router.route("/attachment/view/:job_id").get(Token, Attachment.attachmentView)
      router.route("/attachment/edit/:job_id").post(Token, attachUpload, Attachment.attachmentEdit)
      router.route("/attachment/delete/:_id").get(Token, Attachment.deleteAttachment)
-     router.route("/test").get(Attachment.test)
-
-/** Sample Result File Path */
+     
+     /** Sample Result File Path */
      router.route("/sampleresult/add").post(Token, SampleResult.addSampleResult)
      router.route("/sampleresult/view/:_id").get(Token, SampleResult.sampleResultView)
      router.route("/sampleresult/list/:job_id").get(Token, SampleResult.sampleResultList)
      router.route("/sampleresult/edit/:_id").post(Token, SampleResult.sampleResultEdit)
      router.route("/sampleresult/delete/:_id").get(Token, SampleResult.sampleResultDelete)
-
-/** SignOff Result File Path */
+     
+     /** SignOff Result File Path */
      router.route("/signoff/add").post(Token, signUpload, SignOff.addsign)
      router.route("/signoff/view/:job_id").get(Token, SignOff.signView)
      router.route("/signoff/edit/:job_id").post(Token, signUpload, SignOff.editSign)
      router.route("/signoff/delete/:job_id").get(Token, SignOff.deleteSign)
-
-/** Inspection File Path */
+     
+     /** Inspection File Path */
      router.route("/inspection/add").post(Token, upload, Inspection.addinspection)
      router.route("/inspection/list/:_id").get(Token, Inspection.inspectionList)
-     router.route("/inspection/view/:_id").get(Token, Inspection.Viewinspection)
-     router.route("/inspection/edit/:_id").post(Token, Inspection.Editinspection)
+     router.route("/inspection/view/:job_id").get(Token, Inspection.Viewinspection)
+     // router.route("/inspec/edit/:job_id").post(Token, Inspection.InspectionEdit)
+     router.route("/testinsc/edit/:job_id").post(Token, upload, Inspect.InspectionEdit)
      router.route("/inspection/delete/:_id").get(Token, Inspection.inspectionDelete)
      router.route("/inspection/clone/:_id").post(Token, Inspection.cloneInspection)
 
 /** Preview File Path */
      router.route("/preview/view/:job_id").get(Token, Preview.Viewpreview)
+
+     
 
 
 module.exports = router

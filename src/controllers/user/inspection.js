@@ -1,59 +1,73 @@
 const Inspection = require("../../models/user/inspection")
 const JobTabTask = require('../../models/admin/jobTabTaskSchema');
 const mongoose = require("mongoose")
-const path = require("path")
-
+const path = require('path');
 
 /** Inspection add */
 exports.addinspection = async function addinspection(req, res) {
+    const job_id = req.params.job_id
     try {
 
         var inspectLI = '';
         var inspectSuspect = '';
-        var inspectPriority = '';
+        let inspectPriority = '';
         var inspectData = req.body;
-
+        
         if (inspectData.inspectTo == 'location') {
-            inspectLI = {
-                location_notes: inspectData.inspect.location_notes,
-                photo1: inspectData.inspect.photo1,
-                photo2: inspectData.inspect.photo2,
+            let photo1=''
+            let photo2=''
+            const uploaded = req.files
+            photo1 = process.env.Domain + uploaded.photo1[0].path.replace(/\\/g, '/')
+            if(uploaded.photo2[0] != ''){
+                photo2 = process.env.Domain + uploaded.photo2[0].path.replace(/\\/g, '/')
             }
-            // console.log(req.file.path);
-        }
-
-        if (inspectData.inspectTo == 'item') {
             inspectLI = {
-                Item: inspectData.inspect.Item,
-                Material: inspectData.inspect.Material,
-                photo1: inspectData.inspect.photo1,
-                photo2: inspectData.inspect.photo2,
-                Access: inspectData.inspect.Access,
+                location_notes: inspectData.location_notes,
+                photo1: photo1,
+                photo2: photo2,
+                
+            }
+        }
+        
+        if (inspectData.inspectTo == 'item') {
+            let photo1=''
+            let photo2=''
+            const uploaded = req.files
+            photo1 = process.env.Domain + uploaded.photo1[0].path.replace(/\\/g, '/')
+            if(uploaded.photo2[0] != ''){
+             photo2 = process.env.Domain + uploaded.photo2[0].path.replace(/\\/g, '/')
+            }
+            inspectLI = {
+                Item: inspectData.Item,
+                Material: inspectData.Material,
+                photo1: photo1,
+                photo2: photo2,
+                Access: inspectData.Access,
             };
         }
-
-        if (inspectData.is_suspect_asbestos == true) {
+        
+        if (inspectData.is_suspect_asbestos == 'true') {
             inspectSuspect = {
-                inspection_strategy: inspectData.suspect_asbestos.inspection_strategy,
-                sample_id: inspectData.suspect_asbestos.sample_id,
-                sample_type: inspectData.suspect_asbestos.sample_type,
-                Product_type: inspectData.suspect_asbestos.Product_type,
-                Extent_or_damage: inspectData.suspect_asbestos.Extent_or_damage,
-                Surface_type_treatment: inspectData.suspect_asbestos.Surface_type_treatment,
-                Extent: inspectData.suspect_asbestos.Extent
+                inspection_strategy: inspectData.inspection_strategy,
+                sample_id: inspectData.sample_id,
+                sample_type: inspectData.sample_type,
+                Product_type: inspectData.Product_type,
+                Extent_or_damage: inspectData.Extent_or_damage,
+                Surface_type_treatment: inspectData.Surface_type_treatment,
+                Extent: inspectData.Extent
             };
         }
 
-        if (inspectData.is_priority_assessment == true) {
+        if (inspectData.is_priority_assessment == 'true') {
             inspectPriority = {
-                Main_type_of_activity_in_area: inspectData.priority_assessment.Main_type_of_activity_in_area,
-                Location: inspectData.priority_assessment.Location,
-                Accessibility: inspectData.priority_assessment.Accessibility,
-                Extent_Amount: inspectData.priority_assessment.Extent_Amount
+                Main_type_of_activity_in_area: inspectData.Main_type_of_activity_in_area,
+                Location: inspectData.Location,
+                Accessibility: inspectData.Accessibility,
+                Extent_Amount: inspectData.Extent_Amount
             };
         }
         const saveinspectData = {
-            job_id: inspectData.job_id,
+           job_id: inspectData.job_id,
             building: inspectData.building,
             level: inspectData.level,
             location: inspectData.location,
@@ -68,34 +82,41 @@ exports.addinspection = async function addinspection(req, res) {
             additional_comments: inspectData.additional_comments,
             status: true
         }
-        const add = new Inspection(saveinspectData)
+        const match = await Inspection.findOne({ job_id })
         var msg = ''
-        add.save()
-        msg = 'Added Succesfully'
-        const jobdata = await JobTabTask.findOne({ job_id: mongoose.Types.ObjectId(req.body.job_id) });
-        if(jobdata){
-        const tabArr = jobdata.tabs;
-        //  tabArr.filter(function (value, key) {
-        //     if (value._id == 1) {
-        //         value.status = false;
-        //         // userArr[key].payment_date =  Date.now();
-        //     }
-        // })
-        tabArr.forEach(element => {
-            if (element._id == 3) {
-                element.status = true;
-            }
-        });
-        if(req.body.location != '' && req.body.recomandation != '' && req.body.additional_comments != '' ){
-            const scopetab = await JobTabTask.findByIdAndUpdate({_id :jobdata._id} ,
-                { $set: { tabs: tabArr } },
-                function (er, re) {
-                    console.log("error", er);
-                }
-        ).exec();
-        msg = 'Tab Update Successfull'
+        if(!match){
+            const add = new Inspection(saveinspectData)
+            add.save()
+            msg = 'Added Succesfully'
+        }else{
+            const edit =await Inspection.findOneAndUpdate({job_id}, saveinspectData)
+            msg = "Update Successfull"
+            console.log(edit)
         }
-    }
+        const jobdata = await JobTabTask.findOne({ job_id: mongoose.Types.ObjectId(req.body.job_id) });
+        if (jobdata) {
+            const tabArr = jobdata.tabs;
+            //  tabArr.filter(function (value, key) {
+            //     if (value._id == 1) {
+            //         value.status = false;
+            //         // userArr[key].payment_date =  Date.now();
+            //     }
+            // })
+            tabArr.forEach(element => {
+                if (element._id == 3) {
+                    element.status = true;
+                }
+            });
+            if (req.body.location != '' && req.body.recomandation != '' && req.body.additional_comments != '') {
+                const scopetab = await JobTabTask.findByIdAndUpdate({ _id: jobdata._id },
+                    { $set: { tabs: tabArr } },
+                    function (er, re) {
+                        console.log("error", er);
+                    }
+                ).exec();
+                msg = 'Tab Update Successfull'
+            }
+        }
         return res.status(200).json({ success: true, message: msg })
     } catch (err) {
         return res.status(401).json({ success: false, err: err.message })
@@ -119,9 +140,9 @@ exports.inspectionList = async function inspectionList(req, res) {
 
 /** View Inspection */
 exports.Viewinspection = async function Viewinspection(req, res) {
-    const _id = req.params
+    const job_id = req.params.job_id
     try {
-        const view = await Inspection.findById(_id)
+        const view = await Inspection.findOne({job_id})
         return res.status(200).json({ success: true, data: view })
     } catch (err) {
         return res.status(401).json({ success: false, message: err.message })
@@ -131,16 +152,15 @@ exports.Viewinspection = async function Viewinspection(req, res) {
 
 
 /** Edit Inspection */
-exports.Editinspection = async function Editinspection(req, res) {
-    const _id = req.params
+exports.InspectionEdit = async function InspectionEdit(req, res) {
+    const job_id = req.params.job_id
     try {
-        const edit = await Inspection.findByIdAndUpdate(_id, req.body)
+        const edit = await Inspection.findOneAndUpdate(job_id, req.body)
         return res.status(200).json({ success: true, message: "Update Successfully" })
     } catch (err) {
         return res.status(401).json({ success: false, message: err.message })
     }
 }
-
 
 
 /** Inspection Delete */
