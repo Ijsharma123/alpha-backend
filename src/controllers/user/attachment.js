@@ -5,9 +5,7 @@ const mongoose = require("mongoose")
 /** Attachment Add */
 exports.addAttachment = async function addAttachment(req, res) {
     const job_id = req.body.job_id
-    if (req.file) {      
-        image = req.file.path
-    }
+    
     try {
         
         const match = await Attachment.findOne({ job_id })
@@ -17,8 +15,8 @@ exports.addAttachment = async function addAttachment(req, res) {
                 attachment: req.body.attachment,
                 page_number: req.body.page_number,
                 title: req.body.title,
-                // image:image,
-                image: process.env.Domain + req.file.path.replace(/\\/g, '/'),
+                image:req.body.image,
+                // image: process.env.Domain + req.file.path.replace(/\\/g, '/'),
                 page_size: req.body.page_size,
                 paper_orientation: req.body.paper_orientation,
                 job_id: req.body.job_id,
@@ -33,7 +31,8 @@ exports.addAttachment = async function addAttachment(req, res) {
                 attachment: req.body.attachment,
                 page_number: req.body.page_number,
                 title: req.body.title,
-                image: process.env.Domain + req.file.path.replace(/\\/g, '/'),
+                image: req.body.image,
+                // image: process.env.Domain + req.file.path.replace(/\\/g, '/'),
                 page_size: req.body.page_size,
                 paper_orientation: req.body.paper_orientation,
                 job_id: req.body.job_id,
@@ -90,17 +89,17 @@ exports.attachmentView = async function attachmentView(req, res) {
 /** Attachment Edit */
 exports.attachmentEdit = async function attachmentEdit(req, res) {
     const job_id = req.params.job_id
-    if (req.file == '' || req.file == undefined) {
-        image = req.body.image
-    } else {
-        image = process.env.Domain + req.file.path.replace(/\\/g, '/')
-    }
+    // if (req.file == '' || req.file == undefined) {
+    //     image = req.body.image
+    // } else {
+    //     image = process.env.Domain + req.file.path.replace(/\\/g, '/')
+    // }
     try {
         const edit = await Attachment.findOneAndUpdate(job_id, {
             attachment: req.body.attachment,
             page_number: req.body.page_number,
             title: req.body.title,
-            image: image,
+            image: req.body.image,
             page_size: req.body.page_size,
             paper_orientation: req.body.paper_orientation,
             job_id: req.body.job_id,
