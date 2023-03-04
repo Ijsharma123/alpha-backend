@@ -15,7 +15,7 @@ exports.addCoverPhoto = async function addCoverPhoto(req, res) {
         let msg = ''
         if (!match) {
             const cover = new CoverPhoto({
-                photo: "http://alpha-backend-six.vercel.app/" + req.file.path.replace(/\\/g, '/'),
+                photo: process.env.Domain + req.file.path.replace(/\\/g, '/'),
                 caption: req.body.caption,
                 job_id: req.body.job_id,
                 added_by: req.body.added_by,
@@ -24,7 +24,7 @@ exports.addCoverPhoto = async function addCoverPhoto(req, res) {
             msg = "Your Cover Page Photo is Successfully Stored"
         } else {
             const edit = await CoverPhoto.findOneAndUpdate({ job_id }, {
-                photo: "http://alpha-backend-six.vercel.app/" + req.file.path.replace(/\\/g, '/'),
+                photo: process.env.Domain + req.file.path.replace(/\\/g, '/'),
                 caption: req.body.caption,
                 job_id: req.body.job_id,
                 edit_by: req.body.edit_by,
@@ -121,7 +121,7 @@ exports.CoverPhotoview = async function CoverPhotoview(req, res) {
         }
         try {
             const edit = await CoverPhoto.findByIdAndUpdate(_id, {
-                photo: "http://alpha-backend-six.vercel.app/" + req.file.path.replace(/\\/g, '/'),
+                photo: process.env.Domain + req.file.path.replace(/\\/g, '/'),
                 caption: req.body.caption,
                 job_id: req.body.job_id,
                 added_by: req.body.added_by,
