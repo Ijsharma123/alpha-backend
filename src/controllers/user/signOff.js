@@ -91,7 +91,7 @@ exports.editSign = async function editSign(req, res) {
         const edit = await Sign.findOneAndUpdate({job_id},{
             sign_off:req.body.sign_off,
             name:req.body.name,
-            signature:signature,
+            signature:req.body.signature,
             job_id:req.body.job_id,
             edit_by:req.body.edit_by,
             Date: req.body.Date,
