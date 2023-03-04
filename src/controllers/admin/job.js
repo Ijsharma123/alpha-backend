@@ -16,12 +16,12 @@ exports.jobAdd = async function jobAdd(req, res) {
             tabs: [
                 {
                     "name": "Site Work",
-                    "status": true,
+                    "status": false,
                     "tab_id": 1
                   },
                   {
                     "name": "Lab Result",
-                    "status": true,
+                    "status": false,
                     "tab_id": 2
                   },
                   {
