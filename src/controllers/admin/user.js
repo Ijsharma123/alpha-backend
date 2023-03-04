@@ -79,7 +79,7 @@ exports.userList = async function userList(req, res) {
             {
                 $project: {
                     _id: 1,
-                    user_name: '$user.name',
+                    user_name: '$name',
                     user_group_name: "$user.name",
                     email: 1,
                     group_id: 1,
