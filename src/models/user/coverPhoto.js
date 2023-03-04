@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const coverSchema = mongoose.Schema({
     photo:{
         type:String,
-        required:true
+        required:false
     },
     caption:{
         type:String,

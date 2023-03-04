@@ -10,7 +10,7 @@ const signSchema = mongoose.Schema({
     },
     signature:{
         type:String,
-        required:true
+        required:false
     },
     Date:{
         type:Date,

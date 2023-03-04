@@ -4,16 +4,16 @@ const Inspection = require("../../models/user/inspection")
 /** Inspection Edit */
 exports.InspectionEdit = async function InspectionEdit(req, res) {
     const job_id = req.params.job_id
-    if (req.file == '' || req.file == undefined) {
-        photo1 = req.body.photo1
-    } else {
-        photo1 = process.env.Domain + req.file.path.replace(/\\/g, '/')
-    }
-    if (req.file == '' || req.file == undefined) {
-        photo2 = req.body.photo2
-    } else {
-        photo2 = process.env.Domain + req.file.path.replace(/\\/g, '/')
-    }
+    // if (req.file == '' || req.file == undefined) {
+    //     photo1 = req.body.photo1
+    // } else {
+    //     photo1 = process.env.Domain + req.file.path.replace(/\\/g, '/')
+    // }
+    // if (req.file == '' || req.file == undefined) {
+    //     photo2 = req.body.photo2
+    // } else {
+    //     photo2 = process.env.Domain + req.file.path.replace(/\\/g, '/')
+    // }
     try {
         var inspectLI = '';
         var inspectSuspect = '';
@@ -23,21 +23,21 @@ exports.InspectionEdit = async function InspectionEdit(req, res) {
         let photo1=''
         let photo2=''
         
-        const uploaded = req.files
-        console.log(req.files)
-        // if (!req.files   ) {
-        if (!uploaded.length ) {
-            photo1 = inspectData.photo1
-            console.log('data not available')
-        } else {
-            photo1 = process.env.Domain + uploaded.photo1[0].path.replace(/\\/g, '/')
-            console.log('data available')
-        }
-        // if (!req.files || req.files == '') {
-        //     photo2 = inspectData.photo2
+        // const uploaded = req.files
+        // console.log(req.files)
+        // // if (!req.files   ) {
+        // if (!uploaded.length ) {
+        //     photo1 = inspectData.photo1
+        //     console.log('data not available')
         // } else {
-        //     photo2 = process.env.Domain + uploaded.photo2[0].path.replace(/\\/g, '/')
+        //     photo1 = process.env.Domain + uploaded.photo1[0].path.replace(/\\/g, '/')
+        //     console.log('data available')
         // }
+        // // if (!req.files || req.files == '') {
+        // //     photo2 = inspectData.photo2
+        // // } else {
+        // //     photo2 = process.env.Domain + uploaded.photo2[0].path.replace(/\\/g, '/')
+        // // }
         
         if (inspectData.inspectTo == 'location') {
             

@@ -7,15 +7,14 @@ const jobtabupdate = require('../../models/admin/jobSchema')
 /** Cover Photo Add */
 exports.addCoverPhoto = async function addCoverPhoto(req, res) {
     const job_id = req.body.job_id
-    if (req.file) {
-        upload_document = req.file.path
-    }
+    
     try {
         const match = await CoverPhoto.findOne({ job_id })
         let msg = ''
         if (!match) {
             const cover = new CoverPhoto({
-                photo: process.env.Domain + req.file.path.replace(/\\/g, '/'),
+                // photo: process.env.Domain + req.file.path.replace(/\\/g, '/'),
+                photo: req.body.photo,
                 caption: req.body.caption,
                 job_id: req.body.job_id,
                 added_by: req.body.added_by,
@@ -24,7 +23,8 @@ exports.addCoverPhoto = async function addCoverPhoto(req, res) {
             msg = "Your Cover Page Photo is Successfully Stored"
         } else {
             const edit = await CoverPhoto.findOneAndUpdate({ job_id }, {
-                photo: process.env.Domain + req.file.path.replace(/\\/g, '/'),
+                // photo: process.env.Domain + req.file.path.replace(/\\/g, '/'),
+                photo: req.body.photo,
                 caption: req.body.caption,
                 job_id: req.body.job_id,
                 edit_by: req.body.edit_by,
@@ -116,12 +116,11 @@ exports.CoverPhotoview = async function CoverPhotoview(req, res) {
     /** Cover Photo Edit */
     exports.editCoverPhoto = async function editCoverPhoto(req, res) {
         const _id = req.params
-        if (req.file) {
-            upload_document = req.file.path
-        }
+       
         try {
             const edit = await CoverPhoto.findByIdAndUpdate(_id, {
-                photo: process.env.Domain + req.file.path.replace(/\\/g, '/'),
+                // photo: process.env.Domain + req.file.path.replace(/\\/g, '/'),
+                photo: req.body.photo,
                 caption: req.body.caption,
                 job_id: req.body.job_id,
                 added_by: req.body.added_by,
