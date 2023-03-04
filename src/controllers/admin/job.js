@@ -13,7 +13,33 @@ exports.jobAdd = async function jobAdd(req, res) {
             site_work: req.body.site_work,
             assign_to: req.body.assign_to,
             due_date: req.body.due_date,
-            tabs: req.body.tabs,
+            tabs: [
+                {
+                    "name": "Site Work",
+                    "status": true,
+                    "tab_id": 1
+                  },
+                  {
+                    "name": "Lab Result",
+                    "status": true,
+                    "tab_id": 2
+                  },
+                  {
+                    "name": "Floor Plans",
+                    "status": false,
+                    "tab_id": 3
+                  },
+                  {
+                    "name": "QC",
+                    "status": false,
+                    "tab_id": 4
+                  },
+                  {
+                    "name": "Issued",
+                    "status": false,
+                    "tab_id": 5
+                  }
+            ],
             progress: req.body.progress,
             status: req.body.status,
         })
@@ -47,12 +73,13 @@ exports.jobAdd = async function jobAdd(req, res) {
 /** Job List */
 exports.jobList = async function jobList(req,res){
     try{
-        const jobList = await Job.find()
+        const jobList = await Job.find().sort({addedAt:-1})
         return res.status(200).globalResponse({success:true, count:jobList.length, data:jobList})
     }catch(err){
         return res.status(401).globalResponse({success:false, msg:err.message})
     }
 }
+
 
 
 /** Job Update */
