@@ -23,8 +23,8 @@ exports.addinspection = async function addinspection(req, res) {
             // }
             inspectLI = {
                 location_notes: inspectData.location_notes,
-                photo1: photo1,
-                photo2: photo2,
+                photo1: inspectData.photo1,
+                photo2: inspectData.photo2,
                 
             }
         }
@@ -40,8 +40,8 @@ exports.addinspection = async function addinspection(req, res) {
             inspectLI = {
                 Item: inspectData.Item,
                 Material: inspectData.Material,
-                photo1: photo1,
-                photo2: photo2,
+                photo1: inspectData.photo1,
+                photo2: inspectData.photo2,
                 Access: inspectData.Access,
             };
         }

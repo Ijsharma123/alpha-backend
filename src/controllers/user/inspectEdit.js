@@ -20,8 +20,8 @@ exports.InspectionEdit = async function InspectionEdit(req, res) {
         let inspectPriority = '';
         var inspectData = req.body;
 
-        let photo1=''
-        let photo2=''
+        // let photo1=''
+        // let photo2=''
         
         // const uploaded = req.files
         // console.log(req.files)
@@ -43,8 +43,8 @@ exports.InspectionEdit = async function InspectionEdit(req, res) {
             
             inspectLI = {
                 location_notes: inspectData.location_notes,
-                photo1: photo1,
-                photo2: photo2,
+                photo1: inspectData.photo1,
+                photo2: inspectData.photo2,
                 
             }
         }
@@ -55,8 +55,8 @@ exports.InspectionEdit = async function InspectionEdit(req, res) {
             inspectLI = {
                 Item: inspectData.Item,
                 Material: inspectData.Material,
-                photo1: photo1,
-                photo2: photo2,
+                photo1: inspectData.photo1,
+                photo2: inspectData.photo2,
                 Access: inspectData.Access,
             };
         }
