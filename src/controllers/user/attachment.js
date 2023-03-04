@@ -65,8 +65,8 @@ exports.addAttachment = async function addAttachment(req, res) {
                     msg = 'Tab Update Successfull'
                 }
             }
-            return res.status(200).json({ success: true, message: msg })
         }
+        return res.status(200).json({ success: true, message: msg })
     } catch (err) {
         return res.status(401).json({ success: false, message: err.message })
     }
