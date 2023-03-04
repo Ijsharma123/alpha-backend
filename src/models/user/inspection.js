@@ -6,12 +6,12 @@ const locationSchema  = mongoose.Schema({
     },
     building:{
         type:String,
-        enum:['apartment','colony'],
+        //enum:['apartment','colony'],
         required:true
     },
     level:{
         type:String,
-        enum:['ground','first'],
+        //enum:['ground','first'],
         required:true
     },
     location:{
@@ -20,7 +20,7 @@ const locationSchema  = mongoose.Schema({
     },
     inspectTo:{
         type:String,
-        enum:['location','item'],
+        //enum:['location','item'],
         required:true
     },
     inspect:{
