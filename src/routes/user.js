@@ -39,7 +39,7 @@ const router = express.Router()
 
 /** Cover Photo File Path */
      router.route("/coverphoto/add").post(Token, coverUpload, CoverPhoto.addCoverPhoto)
-     router.route("/coverphoto/view/:job_id").get(Token, CoverPhoto.CoverPhotoview)
+     router.route("/coverphoto/view/:job_id").get(Token, CoverPhoto.CoverPhotoview)       
      router.route("/coverphoto/edit/:_id").post(Token, coverUpload, CoverPhoto.editCoverPhoto)
      router.route("/coverphoto/delete/:_id").get(Token, CoverPhoto.coverPhotoDelete)
 
@@ -48,6 +48,7 @@ const router = express.Router()
      router.route("/attachment/view/:job_id").get(Token, Attachment.attachmentView)
      router.route("/attachment/edit/:job_id").post(Token, attachUpload, Attachment.attachmentEdit)
      router.route("/attachment/delete/:_id").get(Token, Attachment.deleteAttachment)
+     router.route("/test").get(Token, Attachment.test)
      
      /** Sample Result File Path */
      router.route("/sampleresult/add").post(Token, SampleResult.addSampleResult)

@@ -209,7 +209,7 @@ exports.jobAssignTo = async function jobList(req, res) {
     try {
         var jobList = await Job.aggregate([
             {
-                $match: { assign_to:  user_id }
+                $match: { assign_to:{$elemMatch:{_id : user_id, }}}
             },
             { 
                 $sort : { addedAt : -1 } 
@@ -228,13 +228,14 @@ exports.viewjobAssignTo = async function viewjobAssignTo(req, res) {
     const user_id = req.user.id;
     const jod_id = req.body.jod_id;
     try {
-        var jobData = await Job.findOne({ assign_to:  user_id, jod_id });
+        var jobData = await Job.findOne({ assign_to:{$elemMatch:{_id : user_id, }}, jod_id });
         return res.status(200).globalResponse({ success: true, message:'Your job is here!', data: jobData })
 
     } catch (err) {
         return res.status(401).globalResponse({ success: false, message: err.message })
     }
 }
+
 
 /** job tabs task */
 exports.jobTabsTask = async function jobTabTask(req, res) {

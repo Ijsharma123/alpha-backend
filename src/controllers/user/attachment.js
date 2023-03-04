@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 /** Attachment Add */
 exports.addAttachment = async function addAttachment(req, res) {
     const job_id = req.body.job_id
-    if (req.file) {
+    if (req.file) {      
         image = req.file.path
     }
     try {
