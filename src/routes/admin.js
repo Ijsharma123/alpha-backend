@@ -7,6 +7,7 @@ const router = express.Router()
     const UserGroup = require("../controllers/admin/user")
     const Job = require("../controllers/admin/job")
     const Token = require("../Middlewares/admin-token")
+    const JobidView = require("../controllers/admin/jobidView")
 
 
 /** Admin_auth File Routes */
@@ -29,9 +30,13 @@ const router = express.Router()
  
 /** Job File Routes */
     router.route("/job/add").post(Token, Job.jobAdd)
+    // router.route("/job/list").get(Token, Job.jobList)
     router.route("/job/list").get(Token, Job.jobList)
     router.route("/job/edit/:_id").post(Token, Job.jobEdit)
     router.route("/job/delete/:_id").get(Token, Job.jobDelete)
+
+/** JobIdView File Routes */
+    router.route("/job/view/:job_id").get(Token, JobidView.jobidView)
 
 
 module.exports = router
