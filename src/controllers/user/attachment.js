@@ -41,30 +41,30 @@ exports.addAttachment = async function addAttachment(req, res) {
                 updateAt: Date.now()
             })
             msg = 'Update Successfully'
-            // const jobdata = await JobTabTask.findOne({ job_id: mongoose.Types.ObjectId(job_id) });
-            // if (jobdata) {
-            //     const tabArr = jobdata.tabs;
-            //     tabArr.filter(function (value, key) {
-            //         if (value._id == 1) {
-            //             value.status = false;
-            //             // userArr[key].payment_date =  Date.now();
-            //         }
-            //     })
-            //     // tabArr.forEach(element => {
-            //     //     if (element._id == 4) {
-            //     //         element.status = true;
-            //     //     }
-            //     // });
-            //     if (req.body.attachment != '' && req.body.page_number != '' && req.body.title != '' && req.body.page_size != '' && req.body.paper_orientation != '') {
-            //         const scopetab = await JobTabTask.findByIdAndUpdate({ _id: jobdata._id },
-            //             { $set: { tabs: tabArr } },
-            //             function (er, re) {
-            //                 console.log("error", er);
-            //             }
-            //         ).exec();
-            //         msg = 'Tab Update Successfull'
-            //     }
-            // }
+            const jobdata = await JobTabTask.findOne({ job_id: mongoose.Types.ObjectId(job_id) });
+            if (jobdata) {
+                const tabArr = jobdata.tabs;
+                tabArr.filter(function (value, key) {
+                    if (value._id == 1) {
+                        value.status = false;
+                        // userArr[key].payment_date =  Date.now();
+                    }
+                })
+                // tabArr.forEach(element => {
+                //     if (element._id == 4) {
+                //         element.status = true;
+                //     }
+                // });
+                if (req.body.attachment != '' && req.body.page_number != '' && req.body.title != '' && req.body.page_size != '' && req.body.paper_orientation != '') {
+                    const scopetab = await JobTabTask.findByIdAndUpdate({ _id: jobdata._id },
+                        { $set: { tabs: tabArr } },
+                        function (er, re) {
+                            console.log("error", er);
+                        }
+                    ).exec();
+                    msg = 'Tab Update Successfull'
+                }
+            }
         }
         return res.status(200).json({ success: true, message: msg })
     } catch (err) {
