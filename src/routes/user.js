@@ -17,7 +17,7 @@ const router = express.Router()
      const upload = require("../controllers/user/uploadInspectionPhoto")
      const Preview = require("../controllers/user/preview")
      const Inspect = require("../controllers/user/inspectEdit")
-     // const Inspect = require("../controllers/user/inspectEdit2")
+     const ImageIm = require("../controllers/user/imagetest")
 
 /** User_auth File Route */
      router.route("/login").post(User.userLogin)
@@ -70,12 +70,16 @@ const router = express.Router()
      router.route("/inspection/view/:job_id").get(Token, Inspection.Viewinspection)
      router.route("/inspection/edit/:job_id").post(Token, Inspection.InspectionEdit)
      // router.route("/testinsc/edit/:job_id").post(Token, Inspect.InspectionEdit)
-     // router.route("/test/edit/:job_id").post(Token, Inspect.Inspection)
      router.route("/inspection/delete/:_id").get(Token, Inspection.inspectionDelete)
      router.route("/inspection/clone/:_id").post(Token, Inspection.cloneInspection)
 
 /** Preview File Path */
      router.route("/preview/view/:job_id").get(Token, Preview.Viewpreview)
+
+
+
+   router.route("/test/Image").post(attachUpload, ImageIm.ImageTest)
+   router.route("/test/Image/get").get(ImageIm.Imageget)
 
      
 

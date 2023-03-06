@@ -32,6 +32,7 @@ app.use("/src/Images/uploadCoverPhoto",express.static('src/Images/uploadCoverPho
 /** Images path for Attachment Api  */
 app.use("/src/Images/uploadAttachmentPhoto",express.static('src/Images/uploadAttachmentPhoto'))  
 
+app.use("/uploads",express.static('uploads'))  
 
 
 //Admin Path
