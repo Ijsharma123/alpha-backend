@@ -4,6 +4,7 @@ const Inspection = require("../../models/user/inspection")
 /** Inspection Edit */
 exports.InspectionEdit = async function InspectionEdit(req, res) {
     const job_id = req.params.job_id
+    console.log(job_id)
     // if (req.file == '' || req.file == undefined) {
     //     photo1 = req.body.photo1
     // } else {
