@@ -140,9 +140,9 @@ exports.inspectionList = async function inspectionList(req, res) {
 
 /** View Inspection */
 exports.Viewinspection = async function Viewinspection(req, res) {
-    const job_id = req.params.job_id
+    const _id = req.params
     try {
-        const view = await Inspection.findOne({job_id})
+        const view = await Inspection.findById(_id)
         return res.status(200).json({ success: true, data: view })
     } catch (err) {
         return res.status(401).json({ success: false, message: err.message })
@@ -153,9 +153,9 @@ exports.Viewinspection = async function Viewinspection(req, res) {
 
 /** Edit Inspection */
 exports.InspectionEdit = async function InspectionEdit(req, res) {
-    const job_id = req.params.job_id
+    const _id = req.params
     try {
-        const edit = await Inspection.findOneAndUpdate(job_id, req.body)
+        const edit = await Inspection.findByIdAndUpdate(_id, req.body)
         return res.status(200).json({ success: true, message: "Update Successfully" })
     } catch (err) {
         return res.status(401).json({ success: false, message: err.message })
