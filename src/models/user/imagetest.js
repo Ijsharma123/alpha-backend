@@ -1,7 +1,9 @@
+const { contentType } = require("mime-types")
 const mongoose = require("mongoose")
 const imagetest = mongoose.Schema({
     image:{
-        type:String
+        type:Buffer,
+        contentType:String
     }
 })
 
