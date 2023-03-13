@@ -6,7 +6,8 @@ var path = require('path');
 exports.ImageTest = async function ImageTest(req, res){
         try{
             const Img = new Image({
-                data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+                // data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
+                
             })
             Img.save()
             return res.status(200).json({msg:Img})

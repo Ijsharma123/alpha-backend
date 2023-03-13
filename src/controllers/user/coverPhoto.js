@@ -55,20 +55,6 @@ exports.addCoverPhoto = async function addCoverPhoto(req, res) {
                     }
                 ).exec();
                 msg = 'Tab Update Successfull'
-                const joblabelArr = jobdata.tabs;
-                    
-                if(joblabelArr[0].status == true && joblabelArr[1].status == true){
-                    const jobDetails = await Job.findById({ _id: mongoose.Types.ObjectId(job_id) });
-                    const jobTabs = jobDetails.tabs; 
-                    const sendBody= {
-                        job_id  : job_id,
-                        step    : 0,
-                        stepName: "SiteWork",
-                        jobTabs : jobTabs
-                    }
-                    updateJobTabs(sendBody)
-                }
-            }
             const job2 = await jobtabupdate.findById({ _id: job_id })
             if (job2) {
                 const tabArr1 = job2.tabs
@@ -97,8 +83,23 @@ exports.addCoverPhoto = async function addCoverPhoto(req, res) {
                                 }
                             ).exec()
                             msg = 'Job Tab Update Successfully'
+
+                            const joblabelArr = jobdata.tabs;
+                    
+                if(joblabelArr[0].status == true && joblabelArr[1].status == true){
+                    const jobDetails = await Job.findById({ _id: mongoose.Types.ObjectId(job_id) });
+                    const jobTabs = jobDetails.tabs; 
+                    const sendBody= {
+                        job_id  : job_id,
+                        step    : 0,
+                        stepName: "SiteWork",
+                        jobTabs : jobTabs
+                    }
+                    updateJobTabs(sendBody)
+                }
+            }
      
-                          }
+                          
                        
                     })
                     // if( tabArr._id == 2 &&  tabArr._id == 1 && tabArr.status == true){
@@ -106,6 +107,7 @@ exports.addCoverPhoto = async function addCoverPhoto(req, res) {
                 }
             }
             return res.status(200).json({ success: true, message: msg })
+        }
         }
      } catch (err) {
             return res.status(401).json({ success: false, message: err.message })

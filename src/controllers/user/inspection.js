@@ -8,7 +8,7 @@ const path = require('path');
 
 /** Inspection add */
 exports.addinspection = async function addinspection(req, res) {
-    const job_id = req.params.job_id
+    const job_id = req.body.job_id
     try {
 
         var inspectLI = '';
