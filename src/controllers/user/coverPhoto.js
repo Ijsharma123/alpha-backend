@@ -55,37 +55,8 @@ exports.addCoverPhoto = async function addCoverPhoto(req, res) {
                     }
                 ).exec();
                 msg = 'Tab Update Successfull'
-            const job2 = await jobtabupdate.findById({ _id: job_id })
-            if (job2) {
-                const tabArr1 = job2.tabs
-                tabArr1.filter(async function (value, key) {
-                    if (value.SiteWork == false) {
-                        value.SiteWork = true;
-                    }
-                })
-                const jobdata = await JobTabTask.findOne({ job_id: mongoose.Types.ObjectId(job_id) });
-                if (jobdata) {
-                    let jobcount = 0
-                    const tabArr = jobdata.tabs;
-                    tabArr.filter(async function (value, key) {
-                        // if (value._id == 1 && value._id == 2 && value.status == true) {
-                        if (value._id == 1 && value.status == true) {
-                           jobcount += 1;
-                        }
-                        if (value._id == 2 && value.status == true) {
-                            jobcount += 1;
-                         }
-                         if(jobcount == 2){
-                            const job3 = await jobtabupdate.findByIdAndUpdate({ _id: job_id },
-                                { $set: { tabs: tabArr1 } },
-                                function (er, re) {
-                                    console.log("error", er);
-                                }
-                            ).exec()
-                            msg = 'Job Tab Update Successfully'
 
-                            const joblabelArr = jobdata.tabs;
-                    
+                const joblabelArr = jobdata.tabs;
                 if(joblabelArr[0].status == true && joblabelArr[1].status == true){
                     const jobDetails = await Job.findById({ _id: mongoose.Types.ObjectId(job_id) });
                     const jobTabs = jobDetails.tabs; 
@@ -101,14 +72,13 @@ exports.addCoverPhoto = async function addCoverPhoto(req, res) {
      
                           
                        
-                    })
                     // if( tabArr._id == 2 &&  tabArr._id == 1 && tabArr.status == true){
                     //    const filterdata = tabArr.filter(value => value._id == 1 || value._id == 2 && value.status == true)
                 }
-            }
+            
             return res.status(200).json({ success: true, message: msg })
-        }
-        }
+        
+        
      } catch (err) {
             return res.status(401).json({ success: false, message: err.message })
         }
