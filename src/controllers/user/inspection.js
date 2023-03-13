@@ -1,5 +1,8 @@
 const Inspection = require("../../models/user/inspection")
 const JobTabTask = require('../../models/admin/jobTabTaskSchema');
+const Job = require("../../models/admin/jobSchema")
+const {updateJobTabs} = require('../../controllers/user/UpdateTabFunction')
+
 const mongoose = require("mongoose")
 const path = require('path');
 
@@ -115,6 +118,21 @@ exports.addinspection = async function addinspection(req, res) {
                     }
                 ).exec();
                 msg = 'Tab Update Successfull'
+                const joblabelArr = jobdata.tabs;
+                console.log(joblabelArr)
+                if(joblabelArr[2].status == true){
+                    const jobDetails = await Job.findById({ _id: mongoose.Types.ObjectId(job_id) });
+                    console.log(jobDetails)
+                    const jobTabs = jobDetails.tabs; 
+                    console.log(jobTabs)
+                    const sendBody= {
+                        job_id  : job_id,
+                        step    : 1,
+                        stepName: "LabResult",
+                        jobTabs : jobTabs
+                    }
+                    updateJobTabs(sendBody)
+                }
             }
         }
         return res.status(200).json({ success: true, message: msg })

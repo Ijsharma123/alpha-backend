@@ -1,7 +1,8 @@
 const mongoose = require("mongoose")
 const CoverPhoto = require("../../models/user/coverPhoto")
 const JobTabTask = require('../../models/admin/jobTabTaskSchema')
-const jobtabupdate = require('../../models/admin/jobSchema')
+const Job = require('../../models/admin/jobSchema');
+const {updateJobTabs} = require('../../controllers/user/UpdateTabFunction')
 
 
 /** Cover Photo Add */
@@ -54,6 +55,19 @@ exports.addCoverPhoto = async function addCoverPhoto(req, res) {
                     }
                 ).exec();
                 msg = 'Tab Update Successfull'
+                const joblabelArr = jobdata.tabs;
+                    
+                if(joblabelArr[0].status == true && joblabelArr[1].status == true){
+                    const jobDetails = await Job.findById({ _id: mongoose.Types.ObjectId(job_id) });
+                    const jobTabs = jobDetails.tabs; 
+                    const sendBody= {
+                        job_id  : job_id,
+                        step    : 0,
+                        stepName: "SiteWork",
+                        jobTabs : jobTabs
+                    }
+                    updateJobTabs(sendBody)
+                }
             }
             const job2 = await jobtabupdate.findById({ _id: job_id })
             if (job2) {

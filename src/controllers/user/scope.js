@@ -1,5 +1,8 @@
 const Scope = require("../../models/user/scope")
 const JobTabTask = require('../../models/admin/jobTabTaskSchema');
+const jobtabupdate = require('../../models/admin/jobSchema')
+const updateJobTabs = require('../../controllers/user/UpdateTabFunction')
+
 const Job = require("../../models/admin/jobSchema")
 const mongoose = require("mongoose")
 
@@ -50,6 +53,23 @@ exports.addScope = async function addScope(req, res) {
                 }
         ).exec();
         msg = 'Tab Update Successfull'
+        const joblabelArr = jobdata.tabs;
+        console.log(joblabelArr)
+        
+        if(joblabelArr[0].status == true && joblabelArr[1].status == true){
+            const jobDetails = await Job.findById({ _id: mongoose.Types.ObjectId(job_id) });
+            console.log(jobDetails)
+            const jobTabs = jobDetails.tabs; 
+            console.log(jobTabs)
+            const sendBody= {
+                job_id  : job_id,
+                step    : 0,
+                stepName: "SiteWork",
+                jobTabs : jobTabs
+            }
+            updateJobTabs(sendBody)
+        }
+
         }
         return res.status(200).json({ success: true, message: msg })
     } catch (err) {

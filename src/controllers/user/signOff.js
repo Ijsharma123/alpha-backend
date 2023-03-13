@@ -1,5 +1,7 @@
 const Sign = require("../../models/user/signOff")
 const JobTabTask = require('../../models/admin/jobTabTaskSchema');
+const {updateJobTabs} = require('../../controllers/user/UpdateTabFunction')
+const Job = require('../../models/admin/jobSchema');
 const mongoose = require("mongoose")
 
 
@@ -34,6 +36,7 @@ exports.addsign = async function addsign(req, res) {
                 updateAt:Date.now()
             })
             msg = "Update Successfully"
+        }
             const jobdata = await JobTabTask.findOne({ job_id: mongoose.Types.ObjectId(job_id) });
             const tabArr = jobdata.tabs;
              tabArr.filter(function (value, key) {
@@ -54,11 +57,23 @@ exports.addsign = async function addsign(req, res) {
                     }
             ).exec();
             msg = 'Tab Update Successfull'
+            const joblabelArr = jobdata.tabs;
+                    
+            if(joblabelArr[5].status == true && joblabelArr[6].status == true){
+                const jobDetails = await Job.findById({ _id: mongoose.Types.ObjectId(job_id) });
+                const jobTabs = jobDetails.tabs; 
+                const sendBody= {
+                    job_id  : job_id,
+                    step    : 4,
+                    stepName: "Issued",
+                    jobTabs : jobTabs
+                }
+                updateJobTabs(sendBody)
+            }
             }
             return res.status(200).json({success:true, message:msg})
     
-        }
-            return res.status(200).json({ success: true, message: msg })
+        
     } catch (err) {
         return res.status(401).json({ success: false, message: err.message })
     }
