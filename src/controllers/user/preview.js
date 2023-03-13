@@ -50,7 +50,7 @@ async function getAttachment(data){
 
 
 async function getSampleResult(data){
-    const sample = await SampleResult.findOne({job_id:data.job_id}).select(['-status','-addedAt','-updateAt'])
+    const sample = await SampleResult.find({job_id:data.job_id}).select(['-status','-addedAt','-updateAt'])
     if(!sample){
         return {msg:"Job_Id not exist"}
     }else {
