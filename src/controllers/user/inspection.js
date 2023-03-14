@@ -17,13 +17,13 @@ exports.addinspection = async function addinspection(req, res) {
         var inspectData = req.body;
         
         if (inspectData.inspectTo == 'location') {
-            // let photo1=''
-            // let photo2=''
-            // const uploaded = req.files
-            // photo1 = process.env.Domain + uploaded.photo1[0].path.replace(/\\/g, '/')
-            // if(uploaded.photo2[0] != ''){
-            //     photo2 = process.env.Domain + uploaded.photo2[0].path.replace(/\\/g, '/')
-            // }
+            let photo1=''
+            let photo2=''
+            const uploaded = req.files
+            photo1 = process.env.Domain + uploaded.photo1[0].path.replace(/\\/g, '/')
+            if(uploaded.photo2[0] != ''){
+                photo2 = process.env.Domain + uploaded.photo2[0].path.replace(/\\/g, '/')
+            }
             inspectLI = {
                 location_notes: inspectData.location_notes,
                 photo1: inspectData.photo1,
@@ -33,13 +33,13 @@ exports.addinspection = async function addinspection(req, res) {
         }
         
         if (inspectData.inspectTo == 'item') {
-            // let photo1=''
-            // let photo2=''
-            // const uploaded = req.files
-            // photo1 = process.env.Domain + uploaded.photo1[0].path.replace(/\\/g, '/')
-            // if(uploaded.photo2[0] != ''){
-            //  photo2 = process.env.Domain + uploaded.photo2[0].path.replace(/\\/g, '/')
-            // }
+            let photo1=''
+            let photo2=''
+            const uploaded = req.files
+            photo1 = process.env.Domain + uploaded.photo1[0].path.replace(/\\/g, '/')
+            if(uploaded.photo2[0] != ''){
+             photo2 = process.env.Domain + uploaded.photo2[0].path.replace(/\\/g, '/')
+            }
             inspectLI = {
                 Item: inspectData.Item,
                 Material: inspectData.Material,
