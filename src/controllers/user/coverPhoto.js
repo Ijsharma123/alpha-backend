@@ -15,7 +15,6 @@ exports.addCoverPhoto = async function addCoverPhoto(req, res) {
         if (!match) {
             const cover = new CoverPhoto({
                 photo: process.env.Domain + req.file.path.replace(/\\/g, '/'),
-                photo: req.body.photo,
                 caption: req.body.caption,
                 job_id: req.body.job_id,
                 added_by: req.body.added_by,
@@ -25,7 +24,6 @@ exports.addCoverPhoto = async function addCoverPhoto(req, res) {
         } else {
             const edit = await CoverPhoto.findOneAndUpdate({ job_id }, {
                 photo: process.env.Domain + req.file.path.replace(/\\/g, '/'),
-                photo: req.body.photo,
                 caption: req.body.caption,
                 job_id: req.body.job_id,
                 edit_by: req.body.edit_by,
@@ -106,7 +104,6 @@ exports.CoverPhotoview = async function CoverPhotoview(req, res) {
         try {
             const edit = await CoverPhoto.findByIdAndUpdate(_id, {
                 photo: process.env.Domain + req.file.path.replace(/\\/g, '/'),
-                photo: req.body.photo,
                 caption: req.body.caption,
                 job_id: req.body.job_id,
                 added_by: req.body.added_by,

@@ -8,7 +8,9 @@ const mongoose = require("mongoose")
 /** SignOff Add */
 exports.addsign = async function addsign(req, res) {
     const job_id = req.body.job_id
-    
+    if (req.file) {
+        upload_document = req.file.path
+    }
     try {
         const match = await Sign.findOne({ job_id })
         var msg = ''
@@ -16,7 +18,7 @@ exports.addsign = async function addsign(req, res) {
             const add = new Sign({
                 sign_off: req.body.sign_off,
                 name: req.body.name,
-                signature:process.env.Domain + req.file.path.replace(/\\/g, '/'),
+                signature: process.env.Domain + req.file.path.replace(/\\/g, '/'),
                 Date: req.body.Date,
                 job_id: req.body.job_id,
                 added_by: req.body.added_by
@@ -27,15 +29,14 @@ exports.addsign = async function addsign(req, res) {
             const edit = await Sign.findOneAndUpdate({ job_id }, {
                 sign_off: req.body.sign_off,
                 name: req.body.name,
-                signature:process.env.Domain + req.file.path.replace(/\\/g, '/'),
+                signature: process.env.Domain + req.file.path.replace(/\\/g, '/'),
                 Date: req.body.Date,
                 job_id: req.body.job_id,
                 edit_by: req.body.edit_by,
                 updateAt:Date.now()
             })
             msg = "Update Successfully"
-        }
-            const jobdata = await JobTabTask.findOne({ job_id: mongoose.Types.ObjectId(job_id) });
+        }const jobdata = await JobTabTask.findOne({ job_id: mongoose.Types.ObjectId(job_id) });
             const tabArr = jobdata.tabs;
              tabArr.filter(function (value, key) {
                 if (value._id == 7) {
@@ -55,6 +56,7 @@ exports.addsign = async function addsign(req, res) {
                     }
             ).exec();
             msg = 'Tab Update Successfull'
+
             const joblabelArr = jobdata.tabs;
                     
             if(joblabelArr[5].status == true && joblabelArr[6].status == true){
@@ -124,7 +126,7 @@ exports.editSign = async function editSign(req, res) {
 exports.deleteSign = async function deleteSign(req, res) {
     const job_id = req.params.job_id
     try {
-        const sign = await Sign.findAndDelete({job_id})
+        const sign = await Sign.findOneAndDelete({job_id})
         return res.status(200).json({ success: true, message: "Delete Successfully" })
     } catch (err) {
         return res.status(401).json({ success: false, message: err.message })
