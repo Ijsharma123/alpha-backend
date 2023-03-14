@@ -16,7 +16,7 @@ exports.addsign = async function addsign(req, res) {
             const add = new Sign({
                 sign_off: req.body.sign_off,
                 name: req.body.name,
-                // signature:process.env.Domain + req.file.path.replace(/\\/g, '/'),
+                signature:process.env.Domain + req.file.path.replace(/\\/g, '/'),
                 signature:req.body.signature,
                 Date: req.body.Date,
                 job_id: req.body.job_id,
@@ -28,7 +28,7 @@ exports.addsign = async function addsign(req, res) {
             const edit = await Sign.findOneAndUpdate({ job_id }, {
                 sign_off: req.body.sign_off,
                 name: req.body.name,
-                // signature:process.env.Domain + req.file.path.replace(/\\/g, '/'),
+                signature:process.env.Domain + req.file.path.replace(/\\/g, '/'),
                 signature:req.body.signature,
                 Date: req.body.Date,
                 job_id: req.body.job_id,
@@ -97,16 +97,16 @@ exports.signView = async function signView(req, res) {
 /** SignOff Edit */
 exports.editSign = async function editSign(req, res) {
     const job_id = req.params.job_id
-    // if (req.file == '' || req.file == undefined) {
-    //     signature = req.body.signature
-    // } else {
-    //     signature = process.env.Domain + req.file.path.replace(/\\/g, '/')
-    // }
+    if (req.file == '' || req.file == undefined) {
+        signature = req.body.signature
+    } else {
+        signature = process.env.Domain + req.file.path.replace(/\\/g, '/')
+    }
     try {
         const edit = await Sign.findOneAndUpdate({job_id},{
             sign_off:req.body.sign_off,
             name:req.body.name,
-            signature:req.body.signature,
+            signature:signature,
             job_id:req.body.job_id,
             edit_by:req.body.edit_by,
             Date: req.body.Date,
