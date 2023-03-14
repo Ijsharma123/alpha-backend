@@ -5,12 +5,12 @@ const {updateJobTabs} = require('../../controllers/user/UpdateTabFunction')
 const Job = require('../../models/admin/jobSchema');
 const mongoose = require("mongoose")
 
+
 /** Attachment Add */
 exports.addAttachment = async function addAttachment(req, res) {
     const job_id = req.body.job_id
-    
+   
     try {
-        
         const match = await Attachment.findOne({ job_id })
         var msg = ''
         if (!match) {
@@ -18,14 +18,11 @@ exports.addAttachment = async function addAttachment(req, res) {
                 attachment: req.body.attachment,
                 page_number: req.body.page_number,
                 title: req.body.title,
-                image:req.body.image,
                 image: process.env.Domain + req.file.path.replace(/\\/g, '/'),
                 page_size: req.body.page_size,
                 paper_orientation: req.body.paper_orientation,
                 job_id: req.body.job_id,
                 added_by: req.body.added_by,
-
-
             })
             await attach.save()
             msg = 'Attachment Added Successfully'
@@ -34,7 +31,6 @@ exports.addAttachment = async function addAttachment(req, res) {
                 attachment: req.body.attachment,
                 page_number: req.body.page_number,
                 title: req.body.title,
-                image: req.body.image,
                 image: process.env.Domain + req.file.path.replace(/\\/g, '/'),
                 page_size: req.body.page_size,
                 paper_orientation: req.body.paper_orientation,
@@ -43,14 +39,12 @@ exports.addAttachment = async function addAttachment(req, res) {
                 updateAt: Date.now()
             })
             msg = 'Update Successfully'
-        }
-            const jobdata = await JobTabTask.findOne({ job_id: mongoose.Types.ObjectId(job_id) });
+         } const jobdata = await JobTabTask.findOne({ job_id: mongoose.Types.ObjectId(job_id) });
             if (jobdata) {
                 const tabArr = jobdata.tabs;
                 // tabArr.filter(function (value, key) {
                 //     if (value._id == 4) {
                 //         value.status = true;
-                //         // userArr[key].payment_date =  Date.now();
                 //     }
                 // })
                 tabArr.forEach(element => {
@@ -65,7 +59,8 @@ exports.addAttachment = async function addAttachment(req, res) {
                             console.log("error", er);
                         }
                     ).exec();
-                    msg = 'Tab Update Successfull'
+                    msg = 'Tab Update Successfull';
+                    
                     const joblabelArr = jobdata.tabs;
                     
                     if(joblabelArr[3].status == true){
@@ -79,9 +74,9 @@ exports.addAttachment = async function addAttachment(req, res) {
                         }
                         updateJobTabs(sendBody)
                     }
+                    
                 }
             }
-        
         return res.status(200).json({ success: true, message: msg })
     } catch (err) {
         return res.status(401).json({ success: false, message: err.message })
@@ -106,17 +101,18 @@ exports.attachmentView = async function attachmentView(req, res) {
 /** Attachment Edit */
 exports.attachmentEdit = async function attachmentEdit(req, res) {
     const job_id = req.params.job_id
-    // if (req.file == '' || req.file == undefined) {
-    //     image = req.body.image
-    // } else {
-    //     image = process.env.Domain + req.file.path.replace(/\\/g, '/')
-    // }
+    if (req.file == '' || req.file == undefined) {
+        image = req.body.image
+    } else {
+        image = process.env.Domain + req.file.path.replace(/\\/g, '/')
+    }
+    console.log(req.file)
     try {
         const edit = await Attachment.findOneAndUpdate(job_id, {
             attachment: req.body.attachment,
             page_number: req.body.page_number,
             title: req.body.title,
-            image: req.body.image,
+            image: image,
             page_size: req.body.page_size,
             paper_orientation: req.body.paper_orientation,
             job_id: req.body.job_id,
@@ -139,12 +135,4 @@ exports.deleteAttachment = async function deleteAttachment(req, res) {
     } catch (err) {
         return res.status(401).json({ success: false, message: err.message })
     }
-}
-
-
-exports.test = async function test(req, res) {
-   console.log("it is working")
-   
-   console.log(__dirname)
-   res.sendFile(__dirname + '/index.html');
 }
