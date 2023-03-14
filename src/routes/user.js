@@ -19,6 +19,7 @@ const router = express.Router()
      const Inspect = require("../controllers/user/inspectEdit")
      const ImageIm = require("../controllers/user/imagetest")
 
+
 /** User_auth File Route */
      router.route("/login").post(User.userLogin)
      router.route("/sendemail").post(Token, User.sendEmail)
@@ -78,8 +79,8 @@ const router = express.Router()
 
 
 
-   router.route("/test/Image").post(attachUpload, ImageIm.ImageTest)
-   router.route("/test/Image/get").get(ImageIm.Imageget)
+//    router.route("/").post(attachUpload, ImageIm.uploadImage)
+//    router.route("/test/Image/get").get(ImageIm.ImageGet)
 
      
 

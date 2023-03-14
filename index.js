@@ -35,6 +35,11 @@ app.use("/src/Images/uploadAttachmentPhoto",express.static('src/Images/uploadAtt
 app.use("/uploads",express.static('uploads'))  
 
 
+app.get("/",(req,res)=>{
+    res.sendFile(__dirname +"/src/controllers/user/index.html")
+})
+
+
 //Admin Path
 const AdminRouter = require("./src/routes/admin")
 //User Path
