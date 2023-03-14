@@ -16,8 +16,8 @@ const router = express.Router()
      const Inspection = require("../controllers/user/inspection")
      const upload = require("../controllers/user/uploadInspectionPhoto")
      const Preview = require("../controllers/user/preview")
-     const Inspect = require("../controllers/user/inspectEdit")
-     const ImageIm = require("../controllers/user/imagetest")
+     // const Inspect = require("../controllers/user/inspectEdit")
+     // const ImageIm = require("../controllers/user/imagetest")
 
 
 /** User_auth File Route */
@@ -50,7 +50,7 @@ const router = express.Router()
      router.route("/attachment/view/:job_id").get(Token, Attachment.attachmentView)
      router.route("/attachment/edit/:job_id").post(Token, attachUpload, Attachment.attachmentEdit)
      router.route("/attachment/delete/:_id").get(Token, Attachment.deleteAttachment)
-     router.route("/test").get( Attachment.test)
+     // router.route("/test").get( Attachment.test)
      
      /** Sample Result File Path */
      router.route("/sampleresult/add").post(Token, SampleResult.addSampleResult)
