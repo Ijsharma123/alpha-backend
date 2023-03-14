@@ -17,7 +17,6 @@ exports.addsign = async function addsign(req, res) {
                 sign_off: req.body.sign_off,
                 name: req.body.name,
                 signature:process.env.Domain + req.file.path.replace(/\\/g, '/'),
-                signature:req.body.signature,
                 Date: req.body.Date,
                 job_id: req.body.job_id,
                 added_by: req.body.added_by
@@ -29,7 +28,6 @@ exports.addsign = async function addsign(req, res) {
                 sign_off: req.body.sign_off,
                 name: req.body.name,
                 signature:process.env.Domain + req.file.path.replace(/\\/g, '/'),
-                signature:req.body.signature,
                 Date: req.body.Date,
                 job_id: req.body.job_id,
                 edit_by: req.body.edit_by,
