@@ -14,7 +14,7 @@ exports.addCoverPhoto = async function addCoverPhoto(req, res) {
         let msg = ''
         if (!match) {
             const cover = new CoverPhoto({
-                photo: process.env.Domain + req.file.path.replace(/\\/g, '/'),
+                photo: process.env.D + req.file.path.replace(/\\/g, '/'),
                 caption: req.body.caption,
                 job_id: req.body.job_id,
                 added_by: req.body.added_by,
